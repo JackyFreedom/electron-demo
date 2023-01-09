@@ -1,34 +1,7 @@
-async function testIt() {
-  const device = await navigator.bluetooth.requestDevice({
-    acceptAllDevices: true
-  })
-  document.getElementById('device-name').innerHTML = device.name || `ID: ${device.id}`
+function handleKeyPress (event) {
+  // You can put code here to handle the keypress.
+  document.getElementById("last-keypress").innerText = event.key
+  console.log(`You pressed ${event.key}`)
 }
 
-document.getElementById('clickme').addEventListener('click',testIt)
-
-window.electronAPI.bluetoothPairingRequest((event, details) => {
-  const response = {}
-  
-  switch (details.pairingKind) {
-    case 'confirm': {
-      response.confirmed = confirm(`Do you want to connect to device ${details.deviceId}?`)
-      break
-    }
-    case 'confirmPin': {
-      response.confirmed = confirm(`Does the pin ${details.pin} match the pin displayed on device ${details.deviceId}?`)
-      break
-    }
-    case 'providePin': {
-      const pin = prompt(`Please provide a pin for ${details.deviceId}.`)
-      if (pin) {
-        response.pin = pin
-        response.confirmed = true
-      } else {
-        response.confirmed = false
-      }
-    }
-  }
-
-  window.electronAPI.bluetoothPairingResponse(response)
-})
+window.addEventListener('keyup', handleKeyPress, true)

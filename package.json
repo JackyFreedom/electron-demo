@@ -16,5 +16,8 @@
     "electron-connect": "^0.6.3",
     "electron-vite": "^1.0.17",
     "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "mousetrap": "^1.6.5"
   }
 }
