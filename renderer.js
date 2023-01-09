@@ -1,9 +1,34 @@
-document.getElementById('toggle-dark-mode').addEventListener('click', async () => {
-  const isDarkMode = await window.darkMode.toggle()
-  document.getElementById('theme-source').innerHTML = isDarkMode ? 'Dark' : 'Light'
-})
+async function testIt() {
+  const device = await navigator.bluetooth.requestDevice({
+    acceptAllDevices: true
+  })
+  document.getElementById('device-name').innerHTML = device.name || `ID: ${device.id}`
+}
 
-document.getElementById('reset-to-system').addEventListener('click', async () => {
-  await window.darkMode.system()
-  document.getElementById('theme-source').innerHTML = 'System'
+document.getElementById('clickme').addEventListener('click',testIt)
+
+window.electronAPI.bluetoothPairingRequest((event, details) => {
+  const response = {}
+  
+  switch (details.pairingKind) {
+    case 'confirm': {
+      response.confirmed = confirm(`Do you want to connect to device ${details.deviceId}?`)
+      break
+    }
+    case 'confirmPin': {
+      response.confirmed = confirm(`Does the pin ${details.pin} match the pin displayed on device ${details.deviceId}?`)
+      break
+    }
+    case 'providePin': {
+      const pin = prompt(`Please provide a pin for ${details.deviceId}.`)
+      if (pin) {
+        response.pin = pin
+        response.confirmed = true
+      } else {
+        response.confirmed = false
+      }
+    }
+  }
+
+  window.electronAPI.bluetoothPairingResponse(response)
 })

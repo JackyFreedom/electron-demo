@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "gulp:dev": "gulp watch:electron",
     "start": "electron . --enable-logging",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^22.0.0"
+    "electron": "^22.0.0",
+    "electron-connect": "^0.6.3",
+    "electron-vite": "^1.0.17",
+    "gulp": "^4.0.2"
   }
 }
