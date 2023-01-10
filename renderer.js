@@ -1,7 +1,9 @@
-function handleKeyPress (event) {
-  // You can put code here to handle the keypress.
-  document.getElementById("last-keypress").innerText = event.key
-  console.log(`You pressed ${event.key}`)
+document.getElementById('drag1').ondragstart = (event) => {
+  event.preventDefault()
+  window.electron.startDrag('drag-and-drop-1.md')
 }
 
-window.addEventListener('keyup', handleKeyPress, true)
+document.getElementById('drag2').ondragstart = (event) => {
+  event.preventDefault()
+  window.electron.startDrag('drag-and-drop-2.md')
+}
